@@ -1,0 +1,13 @@
+# based on: https://www.docker.com/blog/how-to-use-the-postgres-docker-official-image/
+services:
+  postgres:
+    image: postgres:alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=****
+      - POSTGRES_PASSWORD=****
+      - POSTGRES_DB=flowise
+    ports:
+      - "5432:5432"
+    volumes:
+     - /root/docker-data/postgres:/var/lib/postgresql/data

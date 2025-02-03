@@ -1,0 +1,15 @@
+# This toml file will be used to pre configure variables to run "performance-test.ipynb"
+
+[Model]
+# This section will handle all information of the models that will be tested
+path = '/ollama/.ollama/models/' # this directory should include 2 folders "manifest" and "blobs"
+models = ['llama3.1:70b', 'qwen2.5:72b-instruct-q8_0'] # list of models which will be tested
+
+[Disk_Configuration]
+# This section contains the configurations about the disk settings
+kind = ['lvm', 'mdadm'] # notice that we only support lvm and mdadm
+filesystem = ['xfs', 'ext4'] # the software is only tested for xfs and ext4 (but all file systems from "mkfs" cli tool should work)
+stripe_size = ['8K', '256K', '1024K'] # stripe sizes, which will be tested
+block_size = ['4096', '2048'] # block sizes (of file system), which will be tested
+raid = ['0', '1'] # raid types that will be tested / notice that stipe size and raid type cant be combined
+

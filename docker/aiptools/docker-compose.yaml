@@ -1,0 +1,15 @@
+services:
+  aiptools:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: aiptools:latest
+    ports:
+      - 5000:5000
+    environment:
+      - REANA_SERVER_URL=https://reana-p4n.aip.de
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    restart: always
+ 
+

@@ -1,0 +1,124 @@
+\centering
+\begin{longtable}[H]{|l|p{10cm}|}
+\toprule
+ & Answer \\
+\midrule
+Direct Ollama call & REANA is a reusable and reproducible analysis platform that supports various computational workflows using different types of computational backends such as Kubernetes, Slurm, or HTCondor. Below is a simple example of how you can create a "Hello World" workflow in REANA.
+
+\#\#\# Step 1: Create the Workflow Specification
+
+Firstly, you need to define your workflow specification file (e.g., `reana.yaml`). This file will describe the steps and tools required for your analysis.
+
+Here's an example of what this might look like:
+
+```yaml
+specification:
+  type: serial
+  steps:
+    - environment: 'python:3.8-slim'
+      computational\_backend: kubernetes
+      command: |
+        python <<EOF
+        print("Hello, World!")
+        EOF
+```
+
+This workflow uses a Python 3.8 slim Docker image to run the script that prints "Hello, World!".
+
+\#\#\# Step 2: Create Your Workflow
+
+To create your REANA workflow, you need to have the `reana-client` installed and configured with access to a running REANA server. If not already done, install it using pip:
+
+```bash
+pip install reana-client
+```
+
+Then, configure the client by pointing it towards your REANA server (replace `<REANA\_SERVER\_URL>` with the actual URL of your REANA server):
+
+```bash
+export REANA\_SERVER\_URL=<REANA\_SERVER\_URL>
+reana-client ping
+```
+
+\#\#\# Step 3: Upload and Run Your Workflow
+
+Once you have your `reana.yaml` file ready, upload it to REANA:
+
+```bash
+reana-client create -n my-hello-world-workflow
+reana-client upload reana.yaml
+reana-client start my-hello-world-workflow
+```
+
+\#\#\# Step 4: Check the Results
+
+You can check the status of your workflow and its output using the following commands:
+
+To see the status:
+```bash
+reana-client status -w my-hello-world-workflow
+```
+
+To list all files in your workspace (including logs):
+```bash
+reana-client ls -w my-hello-world-workflow
+```
+
+And to download specific files, such as log files or output files:
+```bash
+reana-client download <filename> -w my-hello-world-workflow
+```
+
+This is a basic example of setting up and running a "Hello World" workflow in REANA. Depending on your needs, you can expand this with more complex workflows involving multiple steps, different computational backends, or even interactive sessions for data analysis. \\
+Simple RAG call & Based on the context provided, I can help you draft a simple "Hello World" REANA workflow similar to the ones given in the examples.
+
+Here's how your `helloworld.yaml` file might look:
+
+```yaml
+inputs:
+  files:
+    - helloworld.py
+
+workflow:
+  type: serial
+  specification:
+    steps:
+      - environment: 'docker.io/library/python:3.10-bookworm'
+        kubernetes\_memory\_limit: '100Mi'
+        kubernetes\_job\_timeout: 60 \# seconds
+        commands:
+          - python helloworld.py
+```
+
+And your `helloworld.py` file should contain:
+
+```python
+print("Hello World!")
+```
+
+This workflow will run the Python script that prints "Hello World!" to the console. \\
+FlowiseAI call & Pass Input:
+```yaml
+\# Hello World Workflow
+inputs:
+  files:
+    - helloworld.py
+
+workflow:
+  type: serial
+  specification:
+    steps:
+      - environment: 'docker.io/library/python:3.10-bookworm'
+        kubernetes\_memory\_limit: '100Mi'
+        kubernetes\_job\_timeout: 60 \# seconds
+        commands:
+          - python helloworld.py
+```
+```python
+\# helloworld.py
+print("Hello, World!")
+``` \\
+\bottomrule
+\caption[]{Time consumption table - answers}
+\end{longtable}
+
